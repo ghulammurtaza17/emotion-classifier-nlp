@@ -341,6 +341,5 @@ This project is configured to deploy directly to [Render](https://render.com) as
 
 ## 👤 Credits & Contact
 
-- **Created by**: [YOUR NAME]
-- **Live Demo**: [YOUR RENDER DEPLOYMENT URL]
-- **LinkedIn**: [YOUR LINKEDIN PROFILE URL]
+- **Created by**: Ghulam Murtaza
+- **Live Demo**: https://emotion-classifier-nlp.onrender.com
