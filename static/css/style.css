@@ -1,0 +1,1494 @@
+/* ==========================================================================
+   Emotion Classifier - Modern, Responsive Stylesheet
+   ========================================================================== */
+
+/* --- CSS Variables & Theme Tokens --- */
+:root {
+  /* Brand & Core Colors */
+  --primary: #6366f1;
+  --primary-hover: #4f46e5;
+  --primary-active: #4338ca;
+  --primary-glow: rgba(99, 102, 241, 0.25);
+  
+  --bg-main: #f8fafc;
+  --surface-card: #ffffff;
+  --surface-subtle: #f1f5f9;
+  --surface-border: #e2e8f0;
+  --surface-border-hover: #cbd5e1;
+
+  --text-main: #0f172a;
+  --text-muted: #64748b;
+  --text-subtle: #94a3b8;
+  --text-inverse: #ffffff;
+
+  /* Emotion Signature Colors */
+  --emotion-joy: #f59e0b;
+  --emotion-joy-bg: rgba(245, 158, 11, 0.12);
+  --emotion-joy-border: rgba(245, 158, 11, 0.35);
+
+  --emotion-sadness: #3b82f6;
+  --emotion-sadness-bg: rgba(59, 130, 246, 0.12);
+  --emotion-sadness-border: rgba(59, 130, 246, 0.35);
+
+  --emotion-anger: #ef4444;
+  --emotion-anger-bg: rgba(239, 68, 68, 0.12);
+  --emotion-anger-border: rgba(239, 68, 68, 0.35);
+
+  --emotion-fear: #8b5cf6;
+  --emotion-fear-bg: rgba(139, 92, 246, 0.12);
+  --emotion-fear-border: rgba(139, 92, 246, 0.35);
+
+  --emotion-love: #ec4899;
+  --emotion-love-bg: rgba(236, 72, 153, 0.12);
+  --emotion-love-border: rgba(236, 72, 153, 0.35);
+
+  --emotion-surprise: #06b6d4;
+  --emotion-surprise-bg: rgba(6, 182, 212, 0.12);
+  --emotion-surprise-border: rgba(6, 182, 212, 0.35);
+
+  /* Status Colors */
+  --danger: #dc2626;
+  --danger-bg: #fef2f2;
+  --danger-border: #fecaca;
+  --success: #16a34a;
+
+  /* Elevation & Shadows */
+  --shadow-sm: 0 1px 2px 0 rgba(0, 0, 0, 0.05);
+  --shadow-md: 0 4px 6px -1px rgba(0, 0, 0, 0.07), 0 2px 4px -2px rgba(0, 0, 0, 0.05);
+  --shadow-lg: 0 10px 25px -3px rgba(15, 23, 42, 0.08), 0 4px 6px -4px rgba(15, 23, 42, 0.04);
+  --shadow-xl: 0 20px 35px -5px rgba(15, 23, 42, 0.1), 0 10px 10px -5px rgba(15, 23, 42, 0.04);
+
+  /* Radii */
+  --radius-sm: 8px;
+  --radius-md: 12px;
+  --radius-lg: 18px;
+  --radius-xl: 24px;
+  --radius-full: 9999px;
+
+  /* Transitions */
+  --transition-fast: 150ms cubic-bezier(0.4, 0, 0.2, 1);
+  --transition-normal: 250ms cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+/* --- Base & Reset --- */
+*, *::before, *::after {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+html {
+  font-size: 16px;
+  scroll-behavior: smooth;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+body {
+  font-family: 'Plus Jakarta Sans', system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+  background-color: var(--bg-main);
+  color: var(--text-main);
+  line-height: 1.5;
+  min-height: 100vh;
+  position: relative;
+  overflow-x: hidden;
+  display: flex;
+  flex-direction: column;
+}
+
+/* --- Subtle Ambient Background Orbs --- */
+.app-background {
+  position: fixed;
+  inset: 0;
+  pointer-events: none;
+  z-index: 0;
+  overflow: hidden;
+}
+
+.glow-orb {
+  position: absolute;
+  border-radius: 50%;
+  filter: blur(80px);
+  opacity: 0.6;
+}
+
+.orb-1 {
+  width: 450px;
+  height: 450px;
+  background: radial-gradient(circle, rgba(99, 102, 241, 0.18) 0%, rgba(139, 92, 246, 0.05) 70%, transparent 100%);
+  top: -100px;
+  right: -50px;
+}
+
+.orb-2 {
+  width: 400px;
+  height: 400px;
+  background: radial-gradient(circle, rgba(236, 72, 153, 0.12) 0%, rgba(6, 182, 212, 0.04) 70%, transparent 100%);
+  bottom: 50px;
+  left: -100px;
+}
+
+/* --- Container Layout --- */
+.app-container {
+  position: relative;
+  z-index: 1;
+  width: 100%;
+  max-width: 820px;
+  margin: 0 auto;
+  padding: 40px 20px 60px;
+  display: flex;
+  flex-direction: column;
+  gap: 32px;
+}
+
+/* --- Header Section --- */
+.app-header {
+  text-align: center;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 12px;
+}
+
+.badge-tag {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 6px 14px;
+  font-size: 0.8125rem;
+  font-weight: 600;
+  color: var(--primary);
+  background: rgba(99, 102, 241, 0.08);
+  border: 1px solid rgba(99, 102, 241, 0.2);
+  border-radius: var(--radius-full);
+}
+
+.badge-icon {
+  font-size: 0.95rem;
+}
+
+.app-title {
+  font-size: 2.75rem;
+  font-weight: 800;
+  letter-spacing: -0.03em;
+  color: var(--text-main);
+  line-height: 1.15;
+}
+
+.gradient-text {
+  background: linear-gradient(135deg, #6366f1 0%, #a855f7 50%, #ec4899 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+.app-description {
+  max-width: 620px;
+  font-size: 1.0625rem;
+  color: var(--text-muted);
+  line-height: 1.6;
+}
+
+.app-description strong {
+  color: var(--text-main);
+  font-weight: 600;
+}
+
+/* ==========================================================================
+   Interactive 3D Emoji Companion Section
+   ========================================================================== */
+.companion-section {
+  width: 100%;
+}
+
+.companion-card {
+  background: var(--surface-card);
+  border: 1px solid var(--surface-border);
+  border-radius: var(--radius-xl);
+  box-shadow: var(--shadow-xl);
+  padding: 32px 24px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  position: relative;
+  overflow: hidden;
+  backdrop-filter: blur(10px);
+}
+
+.companion-card::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 4px;
+  background: var(--companion-theme, var(--emotion-joy));
+  transition: background-color var(--transition-normal);
+}
+
+.companion-stage {
+  perspective: 900px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  position: relative;
+  width: 100%;
+  padding: 10px 0 16px;
+  user-select: none;
+}
+
+/* Ambient Aura Glow behind the Orb */
+.orb-aura {
+  position: absolute;
+  width: 250px;
+  height: 250px;
+  border-radius: 50%;
+  filter: blur(55px);
+  opacity: 0.45;
+  background: radial-gradient(circle, var(--companion-theme, #fbbf24) 0%, transparent 70%);
+  pointer-events: none;
+  transition: background var(--transition-normal), opacity var(--transition-normal);
+  z-index: 0;
+}
+
+/* Floating Wrapper for Idle Motion */
+.orb-float-wrap {
+  position: relative;
+  z-index: 1;
+  animation: companionFloat 3.8s ease-in-out infinite alternate;
+  will-change: transform;
+}
+
+/* 3D Spherical Emoji Orb (180–220px on desktop: exactly 200px) */
+.emoji-orb {
+  width: 200px;
+  height: 200px;
+  border-radius: 50%;
+  position: relative;
+  cursor: default; /* Keeps normal cursor visible */
+  transform-style: preserve-3d;
+  transition: box-shadow var(--transition-normal);
+  will-change: transform;
+}
+
+/* Specular High-Gloss Glass Highlight */
+.orb-specular {
+  position: absolute;
+  top: 14px;
+  left: 24px;
+  width: 90px;
+  height: 54px;
+  border-radius: 50%;
+  background: radial-gradient(ellipse at 35% 25%, rgba(255, 255, 255, 0.95) 0%, rgba(255, 255, 255, 0.4) 38%, transparent 72%);
+  transform: rotate(-24deg);
+  pointer-events: none;
+  filter: blur(0.5px);
+  z-index: 3;
+  transition: transform 120ms ease-out;
+}
+
+/* Bottom Rim Reflection */
+.orb-rim-light {
+  position: absolute;
+  bottom: 2px;
+  left: 20%;
+  width: 60%;
+  height: 30px;
+  border-radius: 50%;
+  background: radial-gradient(ellipse at center, rgba(255, 255, 255, 0.45) 0%, transparent 75%);
+  filter: blur(2px);
+  pointer-events: none;
+  z-index: 1;
+}
+
+/* 3D Vector Face Overlay */
+.orb-face {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 2;
+  pointer-events: none;
+  transform: translateZ(25px);
+  transition: transform 120ms ease-out;
+}
+
+.face-svg {
+  width: 100%;
+  height: 100%;
+}
+
+.face-group {
+  opacity: 0;
+  transform-origin: center center;
+  transform: scale(0.85);
+  transition: opacity 0.28s cubic-bezier(0.4, 0, 0.2, 1), transform 0.28s cubic-bezier(0.34, 1.56, 0.64, 1);
+}
+
+/* Dynamic Floor Shadow */
+.orb-ground-shadow {
+  width: 140px;
+  height: 20px;
+  background: radial-gradient(ellipse at center, rgba(15, 23, 42, 0.32) 0%, rgba(15, 23, 42, 0.08) 55%, transparent 75%);
+  border-radius: 50%;
+  filter: blur(4px);
+  margin-top: 14px;
+  animation: companionShadow 3.8s ease-in-out infinite alternate;
+  will-change: transform, opacity;
+  pointer-events: none;
+}
+
+/* Emotion Color Schemes for the 3D Orb */
+/* 1. Joy 😄 */
+.orb--joy {
+  --companion-theme: var(--emotion-joy);
+  background: radial-gradient(circle at 35% 26%, #fffbeb 0%, #fde047 25%, #f59e0b 60%, #b45309 100%);
+  box-shadow: 
+    inset -14px -18px 30px rgba(146, 64, 14, 0.6),
+    inset 10px 12px 22px rgba(255, 255, 255, 0.75),
+    0 22px 42px -6px rgba(245, 158, 11, 0.45);
+}
+.orb--joy .face--joy {
+  opacity: 1;
+  transform: scale(1);
+}
+
+/* 2. Sadness 😢 */
+.orb--sadness {
+  --companion-theme: var(--emotion-sadness);
+  background: radial-gradient(circle at 35% 26%, #eff6ff 0%, #93c5fd 25%, #3b82f6 60%, #1d4ed8 100%);
+  box-shadow: 
+    inset -14px -18px 30px rgba(30, 58, 138, 0.65),
+    inset 10px 12px 22px rgba(255, 255, 255, 0.7),
+    0 22px 42px -6px rgba(59, 130, 246, 0.45);
+}
+.orb--sadness .face--sadness {
+  opacity: 1;
+  transform: scale(1);
+}
+
+/* 3. Anger 😠 */
+.orb--anger {
+  --companion-theme: var(--emotion-anger);
+  background: radial-gradient(circle at 35% 26%, #fff1f2 0%, #f87171 25%, #ef4444 60%, #991b1b 100%);
+  box-shadow: 
+    inset -14px -18px 30px rgba(127, 29, 29, 0.7),
+    inset 10px 12px 22px rgba(255, 255, 255, 0.7),
+    0 22px 42px -6px rgba(239, 68, 68, 0.45);
+}
+.orb--anger .face--anger {
+  opacity: 1;
+  transform: scale(1);
+}
+
+/* 4. Fear 😨 */
+.orb--fear {
+  --companion-theme: var(--emotion-fear);
+  background: radial-gradient(circle at 35% 26%, #faf5ff 0%, #c084fc 25%, #8b5cf6 60%, #581c87 100%);
+  box-shadow: 
+    inset -14px -18px 30px rgba(76, 29, 149, 0.65),
+    inset 10px 12px 22px rgba(255, 255, 255, 0.7),
+    0 22px 42px -6px rgba(139, 92, 246, 0.45);
+}
+.orb--fear .face--fear {
+  opacity: 1;
+  transform: scale(1);
+}
+
+/* 5. Love 🥰 */
+.orb--love {
+  --companion-theme: var(--emotion-love);
+  background: radial-gradient(circle at 35% 26%, #fdf2f8 0%, #f472b6 25%, #ec4899 60%, #9d174d 100%);
+  box-shadow: 
+    inset -14px -18px 30px rgba(131, 24, 67, 0.65),
+    inset 10px 12px 22px rgba(255, 255, 255, 0.75),
+    0 22px 42px -6px rgba(236, 72, 153, 0.45);
+}
+.orb--love .face--love {
+  opacity: 1;
+  transform: scale(1);
+}
+
+/* 6. Surprise 😲 */
+.orb--surprise {
+  --companion-theme: var(--emotion-surprise);
+  background: radial-gradient(circle at 35% 26%, #ecfeff 0%, #38bdf8 25%, #06b6d4 60%, #0e7490 100%);
+  box-shadow: 
+    inset -14px -18px 30px rgba(21, 94, 117, 0.65),
+    inset 10px 12px 22px rgba(255, 255, 255, 0.7),
+    0 22px 42px -6px rgba(6, 182, 212, 0.45);
+}
+.orb--surprise .face--surprise {
+  opacity: 1;
+  transform: scale(1);
+}
+
+/* Companion Meta & Controls */
+.companion-meta {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 14px;
+  width: 100%;
+  margin-top: 8px;
+}
+
+.companion-status {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  background: var(--surface-subtle);
+  border: 1px solid var(--surface-border);
+  border-radius: var(--radius-full);
+  padding: 4px 14px;
+}
+
+.companion-badge {
+  font-size: 0.75rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  color: var(--text-muted);
+}
+
+.companion-emotion-name {
+  font-size: 0.9375rem;
+  font-weight: 800;
+  color: var(--text-main);
+}
+
+/* 6 Emotion Control Buttons */
+.emotion-controls {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  flex-wrap: wrap;
+}
+
+.emotion-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 8px 14px;
+  font-family: inherit;
+  font-size: 0.875rem;
+  font-weight: 600;
+  color: var(--text-muted);
+  background: var(--surface-subtle);
+  border: 1.5px solid var(--surface-border);
+  border-radius: var(--radius-full);
+  cursor: pointer;
+  transition: all var(--transition-fast);
+  user-select: none;
+  outline: none;
+}
+
+.emotion-btn .btn-emoji {
+  font-size: 1.1rem;
+  line-height: 1;
+}
+
+.emotion-btn:hover {
+  background: #ffffff;
+  color: var(--text-main);
+  border-color: var(--surface-border-hover);
+  transform: translateY(-2px);
+  box-shadow: var(--shadow-sm);
+}
+
+.emotion-btn:focus-visible {
+  border-color: var(--primary);
+  box-shadow: 0 0 0 3px var(--primary-glow);
+}
+
+.emotion-btn.active {
+  background: #ffffff;
+  color: var(--text-main);
+  border-color: var(--primary);
+  box-shadow: 0 2px 10px rgba(99, 102, 241, 0.2);
+  transform: translateY(-1px);
+}
+
+.emotion-btn[data-emotion="joy"].active {
+  border-color: var(--emotion-joy);
+  box-shadow: 0 2px 10px rgba(245, 158, 11, 0.25);
+}
+.emotion-btn[data-emotion="sadness"].active {
+  border-color: var(--emotion-sadness);
+  box-shadow: 0 2px 10px rgba(59, 130, 246, 0.25);
+}
+.emotion-btn[data-emotion="anger"].active {
+  border-color: var(--emotion-anger);
+  box-shadow: 0 2px 10px rgba(239, 68, 68, 0.25);
+}
+.emotion-btn[data-emotion="fear"].active {
+  border-color: var(--emotion-fear);
+  box-shadow: 0 2px 10px rgba(139, 92, 246, 0.25);
+}
+.emotion-btn[data-emotion="love"].active {
+  border-color: var(--emotion-love);
+  box-shadow: 0 2px 10px rgba(236, 72, 153, 0.25);
+}
+.emotion-btn[data-emotion="surprise"].active {
+  border-color: var(--emotion-surprise);
+  box-shadow: 0 2px 10px rgba(6, 182, 212, 0.25);
+}
+
+.companion-caption {
+  font-size: 0.8125rem;
+  color: var(--text-subtle);
+  text-align: center;
+}
+
+/* Animations for Companion */
+@keyframes companionFloat {
+  0% {
+    transform: translateY(0px);
+  }
+  100% {
+    transform: translateY(-10px);
+  }
+}
+
+@keyframes companionShadow {
+  0% {
+    transform: scale(1);
+    opacity: 0.8;
+  }
+  100% {
+    transform: scale(0.82);
+    opacity: 0.45;
+  }
+}
+
+.pupil-shiver {
+  animation: pupilShake 0.4s ease-in-out infinite alternate;
+}
+
+@keyframes pupilShake {
+  0% {
+    transform: translate(0, 0);
+  }
+  100% {
+    transform: translate(1.5px, -1px);
+  }
+}
+
+.animated-tear {
+  animation: tearDrop 2.5s ease-in-out infinite;
+  transform-origin: top center;
+}
+
+@keyframes tearDrop {
+  0%, 100% {
+    transform: translateY(0) scale(1);
+    opacity: 0.9;
+  }
+  50% {
+    transform: translateY(8px) scale(1.08);
+    opacity: 1;
+  }
+}
+
+.heart-eye {
+  animation: heartThrob 1.2s ease-in-out infinite alternate;
+  transform-origin: center center;
+}
+
+@keyframes heartThrob {
+  0% {
+    transform: scale(1);
+  }
+  100% {
+    transform: scale(1.12);
+  }
+}
+
+/* Reduced Motion Setting */
+@media (prefers-reduced-motion: reduce) {
+  .orb-float-wrap,
+  .orb-ground-shadow,
+  .pupil-shiver,
+  .animated-tear,
+  .heart-eye {
+    animation: none !important;
+  }
+
+  .emoji-orb,
+  .orb-specular,
+  .orb-face,
+  .orb-ground-shadow {
+    transition: none !important;
+    transform: none !important;
+  }
+}
+
+/* --- Classifier Card --- */
+.classifier-card {
+  background: var(--surface-card);
+  border: 1px solid var(--surface-border);
+  border-radius: var(--radius-xl);
+  box-shadow: var(--shadow-xl);
+  padding: 32px;
+  display: flex;
+  flex-direction: column;
+  gap: 28px;
+  backdrop-filter: blur(10px);
+  transition: border-color var(--transition-normal);
+}
+
+/* --- Form & Input Section --- */
+.input-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: baseline;
+  margin-bottom: 12px;
+}
+
+.input-label {
+  font-size: 0.9375rem;
+  font-weight: 700;
+  color: var(--text-main);
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  flex-wrap: wrap;
+}
+
+.label-hint {
+  font-size: 0.8125rem;
+  font-weight: 400;
+  color: var(--text-muted);
+}
+
+/* --- Quick Sample Prompts --- */
+.sample-chips {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  flex-wrap: wrap;
+  margin-bottom: 14px;
+}
+
+.chips-label {
+  font-size: 0.8125rem;
+  font-weight: 600;
+  color: var(--text-muted);
+  margin-right: 2px;
+}
+
+.sample-chip {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  background: var(--surface-subtle);
+  border: 1px solid var(--surface-border);
+  border-radius: var(--radius-full);
+  padding: 5px 12px;
+  font-size: 0.8125rem;
+  font-weight: 500;
+  color: var(--text-muted);
+  cursor: pointer;
+  transition: all var(--transition-fast);
+  user-select: none;
+}
+
+.sample-chip:hover {
+  background: #ffffff;
+  color: var(--primary);
+  border-color: var(--primary);
+  box-shadow: var(--shadow-sm);
+  transform: translateY(-1px);
+}
+
+.sample-chip:active {
+  transform: translateY(0);
+}
+
+/* --- Textarea Wrapper --- */
+.textarea-wrapper {
+  position: relative;
+  width: 100%;
+}
+
+textarea#text-input {
+  width: 100%;
+  min-height: 150px;
+  padding: 18px 44px 18px 18px;
+  font-family: inherit;
+  font-size: 1rem;
+  line-height: 1.6;
+  color: var(--text-main);
+  background: #ffffff;
+  border: 1.5px solid var(--surface-border);
+  border-radius: var(--radius-md);
+  outline: none;
+  resize: vertical;
+  transition: border-color var(--transition-fast), box-shadow var(--transition-fast);
+}
+
+textarea#text-input::placeholder {
+  color: var(--text-subtle);
+}
+
+textarea#text-input:focus {
+  border-color: var(--primary);
+  box-shadow: 0 0 0 4px var(--primary-glow);
+}
+
+.textarea-wrapper.has-error textarea#text-input {
+  border-color: var(--danger);
+  box-shadow: 0 0 0 4px rgba(220, 38, 38, 0.15);
+}
+
+.quick-clear-btn {
+  position: absolute;
+  top: 14px;
+  right: 14px;
+  background: var(--surface-subtle);
+  border: 1px solid var(--surface-border);
+  color: var(--text-muted);
+  border-radius: 50%;
+  width: 28px;
+  height: 28px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  transition: all var(--transition-fast);
+}
+
+.quick-clear-btn:hover {
+  background: var(--surface-border);
+  color: var(--text-main);
+}
+
+/* --- Inline Validation Feedback --- */
+.feedback-msg {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 10px 14px;
+  margin-top: 10px;
+  border-radius: var(--radius-sm);
+  font-size: 0.875rem;
+  font-weight: 500;
+  background-color: var(--danger-bg);
+  color: var(--danger);
+  border: 1px solid var(--danger-border);
+  animation: fadeIn 200ms ease;
+}
+
+/* --- Meta & Counters Bar --- */
+.meta-bar {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-top: 10px;
+  font-size: 0.8125rem;
+  color: var(--text-muted);
+  flex-wrap: wrap;
+  gap: 8px;
+}
+
+.stats-group {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.stat-badge {
+  font-variant-numeric: tabular-nums;
+  font-weight: 500;
+}
+
+.stat-badge span {
+  font-weight: 600;
+  color: var(--text-main);
+}
+
+.stat-badge.limit-warning span {
+  color: var(--danger);
+}
+
+.shortcut-hint {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  color: var(--text-subtle);
+}
+
+kbd {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 0.75rem;
+  background: var(--surface-subtle);
+  border: 1px solid var(--surface-border);
+  border-radius: 4px;
+  padding: 2px 6px;
+  color: var(--text-muted);
+  box-shadow: 0 1px 0 rgba(0, 0, 0, 0.05);
+}
+
+/* --- Buttons & Actions --- */
+.actions-group {
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+  gap: 12px;
+  margin-top: 20px;
+}
+
+.btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  font-family: inherit;
+  font-size: 0.9375rem;
+  font-weight: 600;
+  padding: 12px 24px;
+  border-radius: var(--radius-md);
+  border: 1.5px solid transparent;
+  cursor: pointer;
+  transition: all var(--transition-fast);
+  user-select: none;
+  text-decoration: none;
+}
+
+.btn:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+  transform: none !important;
+}
+
+.btn-primary {
+  background: linear-gradient(135deg, var(--primary) 0%, var(--primary-hover) 100%);
+  color: var(--text-inverse);
+  box-shadow: 0 4px 14px rgba(99, 102, 241, 0.35);
+}
+
+.btn-primary:hover:not(:disabled) {
+  background: linear-gradient(135deg, var(--primary-hover) 0%, var(--primary-active) 100%);
+  box-shadow: 0 6px 20px rgba(99, 102, 241, 0.45);
+  transform: translateY(-1px);
+}
+
+.btn-primary:active:not(:disabled) {
+  transform: translateY(0);
+}
+
+.btn-secondary {
+  background: #ffffff;
+  color: var(--text-muted);
+  border-color: var(--surface-border);
+}
+
+.btn-secondary:hover:not(:disabled) {
+  background: var(--surface-subtle);
+  color: var(--text-main);
+  border-color: var(--surface-border-hover);
+}
+
+.btn-spinner {
+  width: 16px;
+  height: 16px;
+  border: 2px solid rgba(255, 255, 255, 0.3);
+  border-radius: 50%;
+  border-top-color: #ffffff;
+  animation: spin 0.8s linear infinite;
+}
+
+/* --- Results Section Container --- */
+.results-container {
+  border-top: 1px solid var(--surface-border);
+  padding-top: 24px;
+  min-height: 180px;
+}
+
+/* Ensure hidden elements and inactive states are strictly mutually exclusive */
+[hidden],
+.result-state[hidden] {
+  display: none !important;
+}
+
+.result-state {
+  animation: fadeIn 300ms ease;
+}
+
+/* --- State 1: Empty / Initial --- */
+.empty-state {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  padding: 24px 16px;
+  color: var(--text-muted);
+}
+
+.state-icon-bubble {
+  width: 64px;
+  height: 64px;
+  border-radius: 50%;
+  background: var(--surface-subtle);
+  border: 1px solid var(--surface-border);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: var(--primary);
+  margin-bottom: 14px;
+}
+
+.state-title {
+  font-size: 1.125rem;
+  font-weight: 700;
+  color: var(--text-main);
+  margin-bottom: 6px;
+}
+
+.state-desc {
+  font-size: 0.9375rem;
+  color: var(--text-muted);
+  max-width: 480px;
+  line-height: 1.5;
+}
+
+/* --- State 2: Loading State --- */
+.loading-state {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  padding: 30px 16px;
+}
+
+.loading-spinner {
+  width: 48px;
+  height: 48px;
+  border: 3.5px solid rgba(99, 102, 241, 0.15);
+  border-radius: 50%;
+  border-top-color: var(--primary);
+  animation: spin 0.9s cubic-bezier(0.65, 0, 0.35, 1) infinite;
+  margin-bottom: 16px;
+}
+
+.skeleton-card {
+  width: 100%;
+  max-width: 480px;
+  background: var(--surface-subtle);
+  border-radius: var(--radius-md);
+  padding: 20px;
+  margin-top: 20px;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.skeleton-line {
+  height: 12px;
+  border-radius: 6px;
+  background: linear-gradient(90deg, #e2e8f0 25%, #f1f5f9 50%, #e2e8f0 75%);
+  background-size: 200% 100%;
+  animation: shimmer 1.5s infinite;
+}
+
+.skeleton-title {
+  height: 24px;
+  width: 50%;
+}
+
+.skeleton-bar {
+  height: 16px;
+  width: 100%;
+}
+
+.skeleton-sub {
+  height: 14px;
+  width: 75%;
+}
+
+/* --- State 3: Result Card --- */
+.result-card {
+  background: #ffffff;
+  border: 1.5px solid var(--surface-border);
+  border-radius: var(--radius-lg);
+  padding: 24px;
+  box-shadow: var(--shadow-md);
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+  position: relative;
+  overflow: hidden;
+  transition: all var(--transition-normal);
+}
+
+.result-card::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 4px;
+  background: var(--current-emotion-color, var(--primary));
+  transition: background-color var(--transition-normal);
+}
+
+.result-card-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  font-size: 0.8125rem;
+  color: var(--text-muted);
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  font-weight: 600;
+}
+
+.result-timestamp {
+  text-transform: none;
+  font-weight: 400;
+  font-variant-numeric: tabular-nums;
+}
+
+.emotion-highlight {
+  display: flex;
+  align-items: center;
+  gap: 20px;
+}
+
+.emotion-avatar {
+  font-size: 2.75rem;
+  width: 76px;
+  height: 76px;
+  border-radius: var(--radius-lg);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: var(--current-emotion-bg, rgba(99, 102, 241, 0.1));
+  border: 1px solid var(--current-emotion-border, rgba(99, 102, 241, 0.25));
+  flex-shrink: 0;
+  box-shadow: var(--shadow-sm);
+  transition: transform var(--transition-normal);
+}
+
+.emotion-highlight:hover .emotion-avatar {
+  transform: scale(1.05) rotate(3deg);
+}
+
+.emotion-info {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  flex-grow: 1;
+}
+
+.emotion-name-wrap {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  flex-wrap: wrap;
+}
+
+.emotion-name {
+  font-size: 1.875rem;
+  font-weight: 800;
+  line-height: 1.2;
+  color: var(--text-main);
+  text-transform: capitalize;
+}
+
+.confidence-pill {
+  display: inline-flex;
+  align-items: center;
+  padding: 4px 12px;
+  font-size: 0.875rem;
+  font-weight: 700;
+  border-radius: var(--radius-full);
+  background: var(--current-emotion-bg, rgba(99, 102, 241, 0.1));
+  color: var(--current-emotion-color, var(--primary));
+  border: 1px solid var(--current-emotion-border, rgba(99, 102, 241, 0.3));
+}
+
+.emotion-description {
+  font-size: 0.9375rem;
+  color: var(--text-muted);
+}
+
+/* Confidence Meter */
+.meter-wrapper {
+  background: var(--surface-subtle);
+  border-radius: var(--radius-md);
+  padding: 16px;
+  border: 1px solid var(--surface-border);
+}
+
+.meter-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 8px;
+  font-size: 0.875rem;
+}
+
+.meter-label {
+  font-weight: 600;
+  color: var(--text-main);
+}
+
+.meter-val {
+  font-family: 'JetBrains Mono', monospace;
+  font-weight: 700;
+  color: var(--current-emotion-color, var(--primary));
+}
+
+.meter-track {
+  width: 100%;
+  height: 10px;
+  background: #e2e8f0;
+  border-radius: var(--radius-full);
+  overflow: hidden;
+}
+
+.meter-fill {
+  height: 100%;
+  border-radius: var(--radius-full);
+  background: var(--current-emotion-color, var(--primary));
+  transition: width 0.7s cubic-bezier(0.34, 1.56, 0.64, 1);
+}
+
+/* Multi-class Probabilities Grid */
+.probabilities-section {
+  border-top: 1px solid var(--surface-border);
+  padding-top: 16px;
+}
+
+.prob-title {
+  font-size: 0.8125rem;
+  font-weight: 700;
+  color: var(--text-muted);
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  margin-bottom: 12px;
+}
+
+.prob-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+  gap: 12px;
+}
+
+.prob-item {
+  background: var(--surface-subtle);
+  border: 1px solid var(--surface-border);
+  border-radius: var(--radius-sm);
+  padding: 10px 12px;
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.prob-item-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  font-size: 0.8125rem;
+  font-weight: 600;
+  text-transform: capitalize;
+}
+
+.prob-item-bar {
+  height: 6px;
+  background: #e2e8f0;
+  border-radius: var(--radius-full);
+  overflow: hidden;
+}
+
+.prob-item-fill {
+  height: 100%;
+  border-radius: var(--radius-full);
+  background: var(--primary);
+  transition: width 0.5s ease;
+}
+
+/* --- State 4: Error State --- */
+.error-state {
+  display: flex;
+  gap: 16px;
+  background: var(--danger-bg);
+  border: 1.5px solid var(--danger-border);
+  border-radius: var(--radius-lg);
+  padding: 20px;
+  align-items: flex-start;
+}
+
+.error-icon-bubble {
+  color: var(--danger);
+  flex-shrink: 0;
+  margin-top: 2px;
+}
+
+.error-content {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.error-title {
+  font-size: 1rem;
+  font-weight: 700;
+  color: var(--danger);
+}
+
+.error-message {
+  font-size: 0.875rem;
+  color: #991b1b;
+  line-height: 1.5;
+}
+
+.btn-outline-error {
+  align-self: flex-start;
+  margin-top: 8px;
+  font-size: 0.8125rem;
+  padding: 6px 14px;
+  background: #ffffff;
+  color: var(--danger);
+  border: 1px solid var(--danger-border);
+  border-radius: var(--radius-sm);
+}
+
+.btn-outline-error:hover {
+  background: var(--danger);
+  color: #ffffff;
+}
+
+/* --- Footer & Supported Categories --- */
+.app-footer {
+  text-align: center;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 16px;
+}
+
+.categories-list {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  flex-wrap: wrap;
+}
+
+.categories-heading {
+  font-size: 0.8125rem;
+  font-weight: 600;
+  color: var(--text-muted);
+}
+
+.cat-tag {
+  display: inline-flex;
+  align-items: center;
+  padding: 4px 10px;
+  font-size: 0.8125rem;
+  font-weight: 600;
+  border-radius: var(--radius-full);
+  border: 1px solid transparent;
+}
+
+.tag-joy {
+  background: var(--emotion-joy-bg);
+  color: #b45309;
+  border-color: var(--emotion-joy-border);
+}
+
+.tag-sadness {
+  background: var(--emotion-sadness-bg);
+  color: #1d4ed8;
+  border-color: var(--emotion-sadness-border);
+}
+
+.tag-anger {
+  background: var(--emotion-anger-bg);
+  color: #b91c1c;
+  border-color: var(--emotion-anger-border);
+}
+
+.tag-fear {
+  background: var(--emotion-fear-bg);
+  color: #6d28d9;
+  border-color: var(--emotion-fear-border);
+}
+
+.tag-love {
+  background: var(--emotion-love-bg);
+  color: #be185d;
+  border-color: var(--emotion-love-border);
+}
+
+.tag-surprise {
+  background: var(--emotion-surprise-bg);
+  color: #0e7490;
+  border-color: var(--emotion-surprise-border);
+}
+
+.footer-note {
+  font-size: 0.8125rem;
+  color: var(--text-subtle);
+}
+
+/* --- Animations --- */
+@keyframes spin {
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(6px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes shimmer {
+  0% {
+    background-position: -200% 0;
+  }
+  100% {
+    background-position: 200% 0;
+  }
+}
+
+/* --- Emotion Theme Dynamic Classes --- */
+.theme-joy {
+  --current-emotion-color: var(--emotion-joy);
+  --current-emotion-bg: var(--emotion-joy-bg);
+  --current-emotion-border: var(--emotion-joy-border);
+}
+
+.theme-sadness {
+  --current-emotion-color: var(--emotion-sadness);
+  --current-emotion-bg: var(--emotion-sadness-bg);
+  --current-emotion-border: var(--emotion-sadness-border);
+}
+
+.theme-anger {
+  --current-emotion-color: var(--emotion-anger);
+  --current-emotion-bg: var(--emotion-anger-bg);
+  --current-emotion-border: var(--emotion-anger-border);
+}
+
+.theme-fear {
+  --current-emotion-color: var(--emotion-fear);
+  --current-emotion-bg: var(--emotion-fear-bg);
+  --current-emotion-border: var(--emotion-fear-border);
+}
+
+.theme-love {
+  --current-emotion-color: var(--emotion-love);
+  --current-emotion-bg: var(--emotion-love-bg);
+  --current-emotion-border: var(--emotion-love-border);
+}
+
+.theme-surprise {
+  --current-emotion-color: var(--emotion-surprise);
+  --current-emotion-bg: var(--emotion-surprise-bg);
+  --current-emotion-border: var(--emotion-surprise-border);
+}
+
+/* --- Responsive Media Queries --- */
+@media (max-width: 768px) {
+  .app-container {
+    padding: 24px 16px 40px;
+    gap: 24px;
+  }
+
+  .app-title {
+    font-size: 2.125rem;
+  }
+
+  .app-description {
+    font-size: 0.95rem;
+  }
+
+  .classifier-card {
+    padding: 20px 16px;
+    gap: 20px;
+  }
+
+  .actions-group {
+    flex-direction: column-reverse;
+    width: 100%;
+  }
+
+  .actions-group .btn {
+    width: 100%;
+  }
+
+  .shortcut-hint {
+    display: none;
+  }
+
+  .emotion-highlight {
+    flex-direction: column;
+    text-align: center;
+    align-items: center;
+  }
+
+  .emotion-name-wrap {
+    justify-content: center;
+  }
+
+  /* Companion Responsive Adjustments */
+  .emoji-orb {
+    width: 170px;
+    height: 170px;
+  }
+
+  .orb-aura {
+    width: 210px;
+    height: 210px;
+  }
+
+  .companion-card {
+    padding: 24px 16px;
+  }
+}
+
+@media (max-width: 480px) {
+  .app-title {
+    font-size: 1.75rem;
+  }
+
+  .emoji-orb {
+    width: 145px;
+    height: 145px;
+  }
+
+  .orb-aura {
+    width: 170px;
+    height: 170px;
+  }
+
+  .emotion-btn {
+    padding: 6px 11px;
+    font-size: 0.8125rem;
+  }
+
+  .sample-chips {
+    overflow-x: auto;
+    flex-wrap: nowrap;
+    padding-bottom: 6px;
+    -webkit-overflow-scrolling: touch;
+  }
+
+  .sample-chip {
+    white-space: nowrap;
+    flex-shrink: 0;
+  }
+}

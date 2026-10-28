@@ -1,0 +1,394 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Emotion Classifier | NLP Sentiment & Emotion Analysis</title>
+  <meta name="description" content="Classify emotional states in text using machine learning. Accurately detect joy, sadness, anger, fear, love, and surprise.">
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>🎭</text></svg>">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+  <!-- Flask static CSS reference with fallback -->
+  <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}" onerror="this.onerror=null;this.href='../static/css/style.css';">
+</head>
+<body>
+  <div class="app-background">
+    <div class="glow-orb orb-1"></div>
+    <div class="glow-orb orb-2"></div>
+  </div>
+
+  <main class="app-container">
+    <!-- Header Section -->
+    <header class="app-header">
+      <div class="badge-tag">
+        <span class="badge-icon">✨</span>
+        <span>NLP Machine Learning Classifier</span>
+      </div>
+      <h1 class="app-title">Emotion <span class="gradient-text">Classifier</span></h1>
+      <p class="app-description">
+        Detect underlying human emotions from everyday statements and thoughts.
+        Trained to categorize text into <strong>Joy</strong>, <strong>Sadness</strong>, 
+        <strong>Anger</strong>, <strong>Fear</strong>, <strong>Love</strong>, and <strong>Surprise</strong>.
+      </p>
+    </header>
+
+    <!-- Interactive 3D Emoji Companion Section -->
+    <section class="companion-section" id="companion-section" aria-label="Interactive 3D Emotion Companion">
+      <div class="companion-card">
+        
+        <!-- 3D Scene Container -->
+        <div class="companion-stage" id="companion-stage">
+          <div class="orb-aura" id="orb-aura"></div>
+          
+          <div class="orb-float-wrap" id="orb-float-wrap">
+            <div class="emoji-orb orb--joy" id="emoji-orb" role="img" aria-label="Interactive 3D Emotion Companion: Joy">
+              
+              <!-- Specular Light Reflection -->
+              <div class="orb-specular" id="orb-specular"></div>
+              
+              <!-- Expressive Vector Face Layer -->
+              <div class="orb-face" id="orb-face">
+                <svg class="face-svg" viewBox="0 0 200 200" fill="none" xmlns="http://www.w3.org/2000/svg">
+                  <!-- Joy Face 😄 -->
+                  <g class="face-group face--joy" id="face-joy">
+                    <!-- Rosy Cheeks -->
+                    <circle cx="48" cy="115" r="15" fill="rgba(244, 63, 94, 0.35)"/>
+                    <circle cx="152" cy="115" r="15" fill="rgba(244, 63, 94, 0.35)"/>
+                    <!-- Smiling Eyes -->
+                    <path d="M52 86 C 58 70, 80 70, 86 86" stroke="#3d2105" stroke-width="8" stroke-linecap="round"/>
+                    <path d="M114 86 C 120 70, 142 70, 148 86" stroke="#3d2105" stroke-width="8" stroke-linecap="round"/>
+                    <!-- Open Beaming Smile with Tongue -->
+                    <path d="M60 112 C 60 156, 140 156, 140 112 Z" fill="#3d2105"/>
+                    <path d="M80 138 C 88 128, 112 128, 120 138 C 114 152, 86 152, 80 138 Z" fill="#f43f5e"/>
+                  </g>
+                  
+                  <!-- Sadness Face 😢 -->
+                  <g class="face-group face--sadness" id="face-sadness">
+                    <!-- Animated Tear Drop -->
+                    <path class="animated-tear" d="M148 116 C 148 116, 138 132, 138 140 C 138 146, 143 150, 149 150 C 155 150, 160 146, 160 140 C 160 132, 148 116, 148 116 Z" fill="#93c5fd"/>
+                    <!-- Downcast sad eyes with reflections -->
+                    <circle cx="68" cy="88" r="11" fill="#0f172a"/>
+                    <circle cx="65" cy="84" r="4" fill="#ffffff"/>
+                    <circle cx="132" cy="88" r="11" fill="#0f172a"/>
+                    <circle cx="129" cy="84" r="4" fill="#ffffff"/>
+                    <!-- Melancholic Eyebrows -->
+                    <path d="M52 68 C 64 60, 78 68, 84 74" stroke="#1e293b" stroke-width="5" stroke-linecap="round"/>
+                    <path d="M148 68 C 136 60, 122 68, 116 74" stroke="#1e293b" stroke-width="5" stroke-linecap="round"/>
+                    <!-- Curved Trembling Mouth -->
+                    <path d="M72 134 C 84 118, 116 118, 128 134" stroke="#0f172a" stroke-width="7" stroke-linecap="round"/>
+                  </g>
+
+                  <!-- Anger Face 😠 -->
+                  <g class="face-group face--anger" id="face-anger">
+                    <!-- Angled fiery brows -->
+                    <path d="M48 66 L 88 82" stroke="#450a0a" stroke-width="8" stroke-linecap="round"/>
+                    <path d="M152 66 L 112 82" stroke="#450a0a" stroke-width="8" stroke-linecap="round"/>
+                    <!-- Fierce narrowed eyes -->
+                    <ellipse cx="68" cy="94" rx="10" ry="8" fill="#450a0a"/>
+                    <circle cx="66" cy="92" r="3" fill="#ffffff"/>
+                    <ellipse cx="132" cy="94" rx="10" ry="8" fill="#450a0a"/>
+                    <circle cx="130" cy="92" r="3" fill="#ffffff"/>
+                    <!-- Gritted teeth frown -->
+                    <path d="M68 132 Q 100 118 132 132 Q 100 146 68 132 Z" fill="#ffffff" stroke="#450a0a" stroke-width="5"/>
+                    <line x1="84" y1="126" x2="84" y2="137" stroke="#450a0a" stroke-width="3"/>
+                    <line x1="100" y1="124" x2="100" y2="139" stroke="#450a0a" stroke-width="3"/>
+                    <line x1="116" y1="126" x2="116" y2="137" stroke="#450a0a" stroke-width="3"/>
+                  </g>
+
+                  <!-- Fear Face 😨 -->
+                  <g class="face-group face--fear" id="face-fear">
+                    <!-- Nervous sweat drop -->
+                    <path d="M156 56 C 156 56, 148 68, 148 74 C 148 79, 152 83, 157 83 C 162 83, 166 79, 166 74 C 166 68, 156 56, 156 56 Z" fill="#67e8f9"/>
+                    <!-- High worried eyebrows -->
+                    <path d="M52 62 C 64 68, 76 60, 84 56" stroke="#2e1065" stroke-width="5.5" stroke-linecap="round"/>
+                    <path d="M148 62 C 136 68, 124 60, 116 56" stroke="#2e1065" stroke-width="5.5" stroke-linecap="round"/>
+                    <!-- Wide startled eyes with dilated pupils -->
+                    <circle cx="68" cy="88" r="14" fill="#ffffff" stroke="#2e1065" stroke-width="4"/>
+                    <circle class="pupil-shiver" cx="68" cy="88" r="6" fill="#2e1065"/>
+                    <circle cx="132" cy="88" r="14" fill="#ffffff" stroke="#2e1065" stroke-width="4"/>
+                    <circle class="pupil-shiver" cx="132" cy="88" r="6" fill="#2e1065"/>
+                    <!-- Wobbly nervous mouth -->
+                    <path d="M66 130 Q 78 122, 90 130 T 114 130 T 134 130" stroke="#2e1065" stroke-width="6" stroke-linecap="round"/>
+                  </g>
+
+                  <!-- Love Face 🥰 -->
+                  <g class="face-group face--love" id="face-love">
+                    <!-- Rosy blushing cheeks -->
+                    <circle cx="48" cy="116" r="17" fill="rgba(244, 63, 94, 0.45)"/>
+                    <circle cx="152" cy="116" r="17" fill="rgba(244, 63, 94, 0.45)"/>
+                    <!-- Heart eyes -->
+                    <path class="heart-eye" d="M68 94 C 68 94, 52 82, 52 70 C 52 62, 58 56, 66 56 C 70 56, 74 59, 76 62 C 78 59, 82 56, 86 56 C 94 56, 100 62, 100 70 C 100 82, 84 94, 84 94 L 76 102 Z" fill="#e11d48"/>
+                    <path class="heart-eye" d="M132 94 C 132 94, 116 82, 116 70 C 116 62, 122 56, 130 56 C 134 56, 138 59, 140 62 C 142 59, 146 56, 150 56 C 158 56, 164 62, 164 70 C 164 82, 148 94, 148 94 L 140 102 Z" fill="#e11d48"/>
+                    <!-- Sweet smiling mouth -->
+                    <path d="M72 122 C 82 142, 118 142, 128 122" stroke="#881337" stroke-width="7" stroke-linecap="round"/>
+                  </g>
+
+                  <!-- Surprise Face 😲 -->
+                  <g class="face-group face--surprise" id="face-surprise">
+                    <!-- High surprised arched eyebrows -->
+                    <path d="M50 54 C 62 44, 78 44, 88 54" stroke="#083344" stroke-width="6" stroke-linecap="round"/>
+                    <path d="M150 54 C 138 44, 122 44, 112 54" stroke="#083344" stroke-width="6" stroke-linecap="round"/>
+                    <!-- Huge round eyes with high shine -->
+                    <circle cx="68" cy="84" r="15" fill="#ffffff" stroke="#083344" stroke-width="4"/>
+                    <circle cx="68" cy="84" r="8" fill="#083344"/>
+                    <circle cx="65" cy="80" r="3.5" fill="#ffffff"/>
+                    <circle cx="132" cy="84" r="15" fill="#ffffff" stroke="#083344" stroke-width="4"/>
+                    <circle cx="132" cy="84" r="8" fill="#083344"/>
+                    <circle cx="129" cy="80" r="3.5" fill="#ffffff"/>
+                    <!-- O-shaped open mouth -->
+                    <ellipse cx="100" cy="132" rx="15" ry="20" fill="#083344"/>
+                    <ellipse cx="100" cy="132" rx="9" ry="14" fill="#0e7490"/>
+                  </g>
+                </svg>
+              </div>
+
+              <!-- Bottom Rim Light Reflection -->
+              <div class="orb-rim-light"></div>
+            </div>
+          </div>
+
+          <!-- Floor Contact Shadow -->
+          <div class="orb-ground-shadow" id="orb-ground-shadow"></div>
+        </div>
+
+        <!-- Companion Controls & Mood Label -->
+        <div class="companion-meta">
+          <div class="companion-status">
+            <span class="companion-badge">Companion Mood</span>
+            <span class="companion-emotion-name" id="companion-emotion-name">Joy 😄</span>
+          </div>
+
+          <!-- 6 Emotion Controls -->
+          <div class="emotion-controls" role="toolbar" aria-label="Emotion companion controls">
+            <button type="button" class="emotion-btn active" data-emotion="joy" aria-label="Switch companion to Joy" aria-pressed="true">
+              <span class="btn-emoji">😄</span>
+              <span class="btn-label">Joy</span>
+            </button>
+            <button type="button" class="emotion-btn" data-emotion="sadness" aria-label="Switch companion to Sadness" aria-pressed="false">
+              <span class="btn-emoji">😢</span>
+              <span class="btn-label">Sadness</span>
+            </button>
+            <button type="button" class="emotion-btn" data-emotion="anger" aria-label="Switch companion to Anger" aria-pressed="false">
+              <span class="btn-emoji">😠</span>
+              <span class="btn-label">Anger</span>
+            </button>
+            <button type="button" class="emotion-btn" data-emotion="fear" aria-label="Switch companion to Fear" aria-pressed="false">
+              <span class="btn-emoji">😨</span>
+              <span class="btn-label">Fear</span>
+            </button>
+            <button type="button" class="emotion-btn" data-emotion="love" aria-label="Switch companion to Love" aria-pressed="false">
+              <span class="btn-emoji">🥰</span>
+              <span class="btn-label">Love</span>
+            </button>
+            <button type="button" class="emotion-btn" data-emotion="surprise" aria-label="Switch companion to Surprise" aria-pressed="false">
+              <span class="btn-emoji">😲</span>
+              <span class="btn-label">Surprise</span>
+            </button>
+          </div>
+          <p class="companion-caption">Move your cursor to gently tilt the companion &bull; Tap or hover controls to explore moods</p>
+        </div>
+
+      </div>
+    </section>
+
+    <!-- Main Classifier Card -->
+    <section class="classifier-card" aria-label="Emotion Classification Tool">
+      <form id="classifier-form" novalidate>
+        
+        <!-- Input Area Header & Examples -->
+        <div class="input-header">
+          <label for="text-input" class="input-label">
+            <span>Input Text</span>
+            <span class="label-hint">Express feelings, thoughts, or copy a passage</span>
+          </label>
+        </div>
+
+        <!-- Sample Prompts / Chips -->
+        <div class="sample-chips" aria-label="Quick sample text inputs">
+          <span class="chips-label">Try an example:</span>
+          <button type="button" class="sample-chip" data-emotion="joy" data-sample="I just got accepted for my dream job and I couldn't be happier!">
+            😊 Joy
+          </button>
+          <button type="button" class="sample-chip" data-emotion="sadness" data-sample="I have been sitting here in the dark feeling so hopeless and tired.">
+            😢 Sadness
+          </button>
+          <button type="button" class="sample-chip" data-emotion="anger" data-sample="It makes me furious when people take credit for someone else's hard work.">
+            😠 Anger
+          </button>
+          <button type="button" class="sample-chip" data-emotion="fear" data-sample="My hands are trembling because I have to present in front of 500 people.">
+            😨 Fear
+          </button>
+          <button type="button" class="sample-chip" data-emotion="love" data-sample="Every moment spent talking with you brings so much warmth to my heart.">
+            ❤️ Love
+          </button>
+          <button type="button" class="sample-chip" data-emotion="surprise" data-sample="I opened the envelope and was completely stunned by what was inside!">
+            😲 Surprise
+          </button>
+        </div>
+
+        <!-- Textarea Container -->
+        <div class="textarea-wrapper" id="textarea-wrapper">
+          <textarea 
+            id="text-input" 
+            name="text" 
+            rows="5" 
+            maxlength="2000"
+            placeholder="Type or paste your text here (e.g., 'I felt so relieved when everything turned out okay')..."
+            aria-describedby="counter-bar input-feedback"
+            required
+          ></textarea>
+
+          <button type="button" id="quick-clear-btn" class="quick-clear-btn" title="Clear input" aria-label="Clear input text" hidden>
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <line x1="18" y1="6" x2="6" y2="18"></line>
+              <line x1="6" y1="6" x2="18" y2="18"></line>
+            </svg>
+          </button>
+        </div>
+
+        <!-- Feedback & Validation Alert -->
+        <div id="input-feedback" class="feedback-msg" role="alert" aria-live="polite" hidden></div>
+
+        <!-- Counter & Metadata Bar -->
+        <div class="meta-bar" id="counter-bar">
+          <div class="stats-group">
+            <span class="stat-badge"><span id="word-count">0</span> words</span>
+            <span class="stat-badge"><span id="char-count">0</span> / 2,000 chars</span>
+          </div>
+          <div class="shortcut-hint">
+            <kbd>Ctrl</kbd> + <kbd>Enter</kbd> to analyze
+          </div>
+        </div>
+
+        <!-- Action Buttons -->
+        <div class="actions-group">
+          <button type="button" id="clear-btn" class="btn btn-secondary">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <path d="M3 6h18"></path>
+              <path d="M19 6v14c0 1-1 2-2 2H7c-1 0-2-1-2-2V6"></path>
+              <path d="M8 6V4c0-1 1-2 2-2h4c1 0 2 1 2 2v2"></path>
+              <line x1="10" y1="11" x2="10" y2="17"></line>
+              <line x1="14" y1="11" x2="14" y2="17"></line>
+            </svg>
+            <span>Clear</span>
+          </button>
+
+          <button type="submit" id="analyze-btn" class="btn btn-primary">
+            <span class="btn-spinner" id="btn-spinner" hidden></span>
+            <svg class="btn-icon" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <path d="M21 12a9 9 0 1 1-9-9c2.52 0 4.85.83 6.72 2.24"></path>
+              <polyline points="21 3 21 9 15 9"></polyline>
+            </svg>
+            <span class="btn-text">Analyze Emotion</span>
+          </button>
+        </div>
+      </form>
+
+      <!-- Results Display Section -->
+      <div class="results-container" id="results-container" aria-live="polite">
+        
+        <!-- State 1: Empty / Initial Ready State -->
+        <div class="result-state empty-state" id="empty-state">
+          <div class="state-icon-bubble">
+            <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+              <circle cx="12" cy="12" r="10"></circle>
+              <path d="M8 14s1.5 2 4 2 4-2 4-2"></path>
+              <line x1="9" y1="9" x2="9.01" y2="9"></line>
+              <line x1="15" y1="9" x2="15.01" y2="9"></line>
+            </svg>
+          </div>
+          <h3 class="state-title">Ready for Analysis</h3>
+          <p class="state-desc">Enter any sentence or feeling above, then click <strong>Analyze Emotion</strong> to identify the primary emotional state and confidence.</p>
+        </div>
+
+        <!-- State 2: Loading State -->
+        <div class="result-state loading-state" id="loading-state" hidden>
+          <div class="loading-spinner"></div>
+          <h3 class="state-title">Analyzing Emotion...</h3>
+          <p class="state-desc">Processing text tokens and computing classifier probability distributions.</p>
+          <div class="skeleton-card">
+            <div class="skeleton-line skeleton-title"></div>
+            <div class="skeleton-line skeleton-bar"></div>
+            <div class="skeleton-line skeleton-sub"></div>
+          </div>
+        </div>
+
+        <!-- State 3: Prediction Result Display -->
+        <div class="result-state result-card" id="result-card" hidden>
+          <div class="result-card-header">
+            <span class="result-label">Predicted Emotion</span>
+            <span class="result-timestamp" id="result-time">Just now</span>
+          </div>
+
+          <div class="emotion-highlight" id="emotion-highlight">
+            <div class="emotion-avatar" id="emotion-avatar">🎭</div>
+            <div class="emotion-info">
+              <div class="emotion-name-wrap">
+                <h2 class="emotion-name" id="emotion-name">—</h2>
+                <span class="confidence-pill" id="confidence-pill">0% Confidence</span>
+              </div>
+              <p class="emotion-description" id="emotion-description">Primary predicted emotional state based on linguistic cues.</p>
+            </div>
+          </div>
+
+          <!-- Confidence Meter -->
+          <div class="meter-wrapper">
+            <div class="meter-header">
+              <span class="meter-label">Model Confidence</span>
+              <span class="meter-val" id="meter-val">0.0%</span>
+            </div>
+            <div class="meter-track" role="progressbar" aria-valuenow="0" aria-valuemin="0" aria-valuemax="100">
+              <div class="meter-fill" id="meter-fill" style="width: 0%"></div>
+            </div>
+          </div>
+
+          <!-- Probability Breakdown (For Multi-class Distribution) -->
+          <div class="probabilities-section" id="probabilities-section" hidden>
+            <h4 class="prob-title">Class Distribution</h4>
+            <div class="prob-grid" id="prob-grid">
+              <!-- Dynamically populated if probability scores are returned -->
+            </div>
+          </div>
+        </div>
+
+        <!-- State 4: Error State -->
+        <div class="result-state error-state" id="error-state" hidden>
+          <div class="error-icon-bubble">
+            <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <circle cx="12" cy="12" r="10"></circle>
+              <line x1="12" y1="8" x2="12" y2="12"></line>
+              <line x1="12" y1="16" x2="12.01" y2="16"></line>
+            </svg>
+          </div>
+          <div class="error-content">
+            <h3 class="error-title" id="error-title">Backend Connection Required</h3>
+            <p class="error-message" id="error-message">
+              The prediction service is not reachable yet. Once the Flask backend is configured and running, predictions will be calculated in real-time.
+            </p>
+            <button type="button" class="btn btn-sm btn-outline-error" id="dismiss-error-btn">Dismiss</button>
+          </div>
+        </div>
+
+      </div>
+    </section>
+
+    <!-- Supported Categories Info Footer -->
+    <footer class="app-footer">
+      <div class="categories-list">
+        <span class="categories-heading">Supported Categories:</span>
+        <span class="cat-tag tag-joy">😊 Joy</span>
+        <span class="cat-tag tag-sadness">😢 Sadness</span>
+        <span class="cat-tag tag-anger">😠 Anger</span>
+        <span class="cat-tag tag-fear">😨 Fear</span>
+        <span class="cat-tag tag-love">❤️ Love</span>
+        <span class="cat-tag tag-surprise">😲 Surprise</span>
+      </div>
+      <p class="footer-note">Flask Ready &bull; Scikit-Learn NLP Model Architecture &bull; Vanilla JS</p>
+    </footer>
+  </main>
+
+  <!-- Flask static JS reference with fallback -->
+  <script src="{{ url_for('static', filename='js/script.js') }}" onerror="this.onerror=null;this.src='../static/js/script.js';"></script>
+</body>
+</html>
